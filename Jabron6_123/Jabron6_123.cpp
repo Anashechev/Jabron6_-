@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -101,16 +101,11 @@ int main() {
 
     Library library;
 
-    Book book1(L"Война и мир", L"Лев Толстой", L"Классика", 1869, L"Исторический роман о наполеоновских войнах.");
-    Book book2(L"Преступление и наказание", L"Федор Достоевский", L"Классика", 1866, L"Роман о человеке, совершившем ужасное преступление.");
-    Book book3(L"Мастер и Маргарита", L"Михаил Булгаков", L"Фантастика", 1967, L"Фантастический роман о встрече с дьяволом.");
-
-    library.addBook(book1);
-    library.addBook(book2);
-    library.addBook(book3);
-
     int choice = 0;
     while (choice != 9) {
+        std::wstring title, author, genre, description;
+        int publicationYear, userId;
+
         std::wcout << L"Выберите действие:\n";
         std::wcout << L"1. Добавить книгу\n";
         std::wcout << L"2. Поиск книг по автору\n";
@@ -123,30 +118,27 @@ int main() {
 
         std::wcin >> choice;
 
-        std::wstring title;
-        int userId;
-
         switch (choice) {
         case 1:
             std::wcout << L"Введите название книги: ";
             std::wcin.ignore();
             std::getline(std::wcin, title);
             std::wcout << L"Введите автора книги: ";
-            std::getline(std::wcin, title);
+            std::getline(std::wcin, author);
             std::wcout << L"Введите жанр книги: ";
-            std::getline(std::wcin, title);
+            std::getline(std::wcin, genre);
             std::wcout << L"Введите год издания книги: ";
-            std::wcin >> userId;
+            std::wcin >> publicationYear;
             std::wcout << L"Введите описание книги: ";
             std::wcin.ignore();
-            std::getline(std::wcin, title);
-            library.addBook(Book(title, title, title, userId, title));
+            std::getline(std::wcin, description);
+            library.addBook(Book(title, author, genre, publicationYear, description));
             break;
         case 2:
             std::wcout << L"Введите автора для поиска: ";
             std::wcin.ignore();
-            std::getline(std::wcin, title);
-            for (const auto& book : library.searchByAuthor(title)) {
+            std::getline(std::wcin, author);
+            for (const auto& book : library.searchByAuthor(author)) {
                 std::wcout << L"Название: " << book.title() << std::endl;
                 std::wcout << L"Автор: " << book.author() << std::endl;
                 std::wcout << L"Жанр: " << book.genre() << std::endl;
@@ -169,8 +161,8 @@ int main() {
         case 4:
             std::wcout << L"Введите жанр для поиска: ";
             std::wcin.ignore();
-            std::getline(std::wcin, title);
-            for (const auto& book : library.searchByGenre(title)) {
+            std::getline(std::wcin, genre);
+            for (const auto& book : library.searchByGenre(genre)) {
                 std::wcout << L"Название: " << book.title() << std::endl;
                 std::wcout << L"Автор: " << book.author() << std::endl;
                 std::wcout << L"Жанр: " << book.genre() << std::endl;
